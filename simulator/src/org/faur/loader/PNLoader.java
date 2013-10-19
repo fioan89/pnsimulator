@@ -90,7 +90,7 @@ public class PNLoader implements ILoader {
         String[] locs = locations.split(",");
         Map<String, IPlace> places = new HashMap<String, IPlace>();
         for (String location : locs) {
-            String tmp = location.substring(1,location.length());
+            String tmp = location.substring(1,location.length() - 1);
             String[] data = tmp.split(" ");
             places.put(data[0], new Place(data[0], Integer.valueOf(data[1])));
         }
@@ -101,7 +101,7 @@ public class PNLoader implements ILoader {
         String[] trans = transitionsString.split(",");
         Map<String, ITransition> toBeReturned = new HashMap<String, ITransition>();
         for (String transition : trans) {
-            String tmp = transition.substring(1, transition.length());
+            String tmp = transition.substring(1, transition.length() - 1);
             String[] data = tmp.split(" ");
             Transition t = new Transition(data[0]);
             t.setTime(Integer.valueOf(data[1]), Integer.valueOf(data[2]));
@@ -113,7 +113,7 @@ public class PNLoader implements ILoader {
     private void setInputLocationsFromString(String inputLocations) {
         String[] splittedData = inputLocations.split(",");
         for (String data : splittedData) {
-            String tmp = data.substring(1, data.length());
+            String tmp = data.substring(1, data.length() - 1);
             String[] inputLocs = tmp.split(" ");
             // search for the transition
             ITransition transition = getTransition(inputLocs[0]);
@@ -131,7 +131,7 @@ public class PNLoader implements ILoader {
     private void setOutputLocationsFromString(String outputLocations) {
         String[] splittedData = outputLocations.split(",");
         for (String data : splittedData) {
-            String tmp = data.substring(1, data.length());
+            String tmp = data.substring(1, data.length() - 1);
             String[] outputLocs = tmp.split(" ");
             // search for the transition
             ITransition transition = getTransition(outputLocs[0]);
