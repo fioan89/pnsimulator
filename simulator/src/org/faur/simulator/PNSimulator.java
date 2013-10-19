@@ -147,9 +147,7 @@ public class PNSimulator extends Thread implements ISimulator {
                 }
                 simulator.resetExecution();
                 System.out.println("----------- Simulator reset -----------");
-            } else if (choice.startsWith("s ")) {
-                String[] data = choice.split(" ");
-                simulator.setPetriNetLocation(data[1]);
+            } else if ("s".equals(choice)) {
                 simulator.stopExecution();
                 try {
                     simulator.join();

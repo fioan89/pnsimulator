@@ -59,27 +59,28 @@ public class Transition implements ITransition {
 
     @Override
     public boolean fire() {
-        if (isEnabled()) {
             if (!fireCalled) {
-                // remove 1 token from every input location but do not insert them
-                // in the output locations. Also set the timer
-                for (IPlace place : inputPlaces) {
-                    place.removeTokens(TOKENS_TO_REMOVE);
+                if (isEnabled()) {
+                    // remove 1 token from every input location but do not insert them
+                    // in the output locations. Also set the timer
+                    for (IPlace place : inputPlaces) {
+                        place.removeTokens(TOKENS_TO_REMOVE);
+                    }
+                    timer = time;
+                    timer--;
+                    fireCalled = true;
                 }
-                timer = time--;
-                fireCalled = true;
             } else {
                 timer--;
                 if (timer <= 0) {
                     // insert 1 token in every output location and then reset fireCalled;
                     for (IPlace place : outputPlaces) {
-                        place.removeTokens(TOKENS_TO_ADD);
+                        place.addTokens(TOKENS_TO_ADD);
                     }
                     fireCalled = false;
                     return true;
                 }
             }
-        }
         return false;
     }
 
