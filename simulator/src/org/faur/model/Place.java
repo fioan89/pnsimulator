@@ -73,4 +73,11 @@ public class Place implements IPlace {
     public void addTokens(int nrOfTokens) {
         this.tokens += nrOfTokens;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(this.name).append("( ").append(String.valueOf(this.tokens)).append(" )");
+        return builder.toString();
+    }
 }

@@ -28,6 +28,7 @@ public class Transition implements ITransition {
     private String name;
     private int minTime;
     private int maxTime;
+    private int time;
     List<IPlace> inputPlaces;
     List<IPlace> outputPlaces;
 
@@ -35,6 +36,7 @@ public class Transition implements ITransition {
         this.name = name;
         this.minTime = 0;
         this.maxTime = 1;
+        this.time = 0;
         this.inputPlaces = new ArrayList<IPlace>();
         this.outputPlaces = new ArrayList<IPlace>();
     }
@@ -45,7 +47,7 @@ public class Transition implements ITransition {
 
     @Override
     public void setName(String transitionName) {
-        this.name = name;
+        this.name = transitionName;
     }
 
     @Override
@@ -85,5 +87,14 @@ public class Transition implements ITransition {
             this.minTime = 0;
             this.maxTime = 1;
         }
+
+        this.time = this.minTime + (int)(Math.random() * this.maxTime);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(this.name).append("[ ").append(String.valueOf(this.time)).append(" ]");
+        return builder.toString();
     }
 }
