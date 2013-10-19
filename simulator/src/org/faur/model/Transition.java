@@ -25,10 +25,15 @@ import java.util.List;
  * Time: 5:36 PM
  */
 public class Transition implements ITransition {
+    private static final int TOKENS_TO_REMOVE = 1;
+    private static final int TOKENS_TO_ADD = 1;
+
     private String name;
     private int minTime;
     private int maxTime;
     private int time;
+    private boolean fireCalled;
+    private int timer;
     List<IPlace> inputPlaces;
     List<IPlace> outputPlaces;
 
@@ -37,6 +42,8 @@ public class Transition implements ITransition {
         this.minTime = 0;
         this.maxTime = 1;
         this.time = 0;
+        this.timer = 0;
+        this.fireCalled = false;
         this.inputPlaces = new ArrayList<IPlace>();
         this.outputPlaces = new ArrayList<IPlace>();
     }
@@ -52,6 +59,27 @@ public class Transition implements ITransition {
 
     @Override
     public boolean fire() {
+        if (isEnabled()) {
+            if (!fireCalled) {
+                // remove 1 token from every input location but do not insert them
+                // in the output locations. Also set the timer
+                for (IPlace place : inputPlaces) {
+                    place.removeTokens(TOKENS_TO_REMOVE);
+                }
+                timer = time--;
+                fireCalled = true;
+            } else {
+                timer--;
+                if (timer <= 0) {
+                    // insert 1 token in every output location and then reset fireCalled;
+                    for (IPlace place : outputPlaces) {
+                        place.removeTokens(TOKENS_TO_ADD);
+                    }
+                    fireCalled = false;
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -96,5 +124,14 @@ public class Transition implements ITransition {
         StringBuilder builder = new StringBuilder();
         builder.append(this.name).append("[ ").append(String.valueOf(this.time)).append(" ]");
         return builder.toString();
+    }
+
+    private boolean isEnabled() {
+        for (IPlace place : inputPlaces) {
+            if (place.getNrOfTokens() <= 0) {
+                return false;
+            }
+        }
+        return true;
     }
 }
