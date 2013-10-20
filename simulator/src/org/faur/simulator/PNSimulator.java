@@ -106,6 +106,10 @@ public class PNSimulator extends Thread implements ISimulator {
                 transition.fire();
             }
 
+            for (IPlace place : places) {
+                place.addTokens(place.getScheduledTokens());
+            }
+
         }
     }
 

@@ -47,6 +47,7 @@ public class Transition implements ITransition {
         this.inputPlaces = new ArrayList<IPlace>();
         this.outputPlaces = new ArrayList<IPlace>();
     }
+
     @Override
     public String getName() {
         return this.name;
@@ -59,28 +60,33 @@ public class Transition implements ITransition {
 
     @Override
     public boolean fire() {
-            if (!fireCalled) {
-                if (isEnabled()) {
-                    // remove 1 token from every input location but do not insert them
-                    // in the output locations. Also set the timer
-                    for (IPlace place : inputPlaces) {
-                        place.removeTokens(TOKENS_TO_REMOVE);
-                    }
-                    timer = time;
-                    timer--;
-                    fireCalled = true;
+        for (IPlace place : outputPlaces) {
+            place.setScheduledTokens(0);
+        }
+        if (!fireCalled) {
+            if (isEnabled()) {
+                // remove 1 token from every input location but do not insert them
+                // in the output locations. Also set the timer
+                for (IPlace place : inputPlaces) {
+                    place.removeTokens(TOKENS_TO_REMOVE);
                 }
-            } else {
+                timer = time;
                 timer--;
-                if (timer <= 0) {
-                    // insert 1 token in every output location and then reset fireCalled;
-                    for (IPlace place : outputPlaces) {
-                        place.addTokens(TOKENS_TO_ADD);
-                    }
-                    fireCalled = false;
-                    return true;
-                }
+
+                fireCalled = true;
             }
+
+        } else {
+            timer--;
+            if (timer <= 0) {
+                // insert 1 token in every output location and then reset fireCalled;
+                for (IPlace place : outputPlaces) {
+                    place.setScheduledTokens(TOKENS_TO_ADD);
+                }
+                fireCalled = false;
+                return true;
+            }
+        }
         return false;
     }
 
@@ -117,7 +123,7 @@ public class Transition implements ITransition {
             this.maxTime = 1;
         }
 
-        this.time = this.minTime + (int)(Math.random() * this.maxTime);
+        this.time = this.minTime + (int) (Math.random() * this.maxTime);
     }
 
     @Override
