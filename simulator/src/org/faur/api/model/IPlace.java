@@ -55,4 +55,18 @@ public interface IPlace {
      * @param nrOfTokens tokens to be added.
      */
     void addTokens(int nrOfTokens);
+
+    /**
+     *  Gets the number of tokens scheduled for addition.
+     *
+     * @return a number of tokens that are scheduled some time in the future to be added.
+     */
+    int getScheduledTokens();
+
+    /**
+     * Schedules the token for addition.
+     *
+     * @param nrOfTokens tokens scheduled to be added.
+     */
+    void setScheduledTokens(int nrOfTokens);
 }

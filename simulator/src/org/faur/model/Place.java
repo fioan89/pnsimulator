@@ -22,6 +22,7 @@ import org.faur.api.model.IPlace;
  */
 public class Place implements IPlace {
     private int tokens;
+    private int scheduledTokens;
     private String name;
 
     /**
@@ -40,6 +41,7 @@ public class Place implements IPlace {
     public Place(String name, int numberOfTokens) {
         this.name = name;
         this.tokens = numberOfTokens;
+        this.scheduledTokens = 0;
     }
     @Override
     public String getName() {
@@ -72,6 +74,16 @@ public class Place implements IPlace {
     @Override
     public void addTokens(int nrOfTokens) {
         this.tokens += nrOfTokens;
+    }
+
+    @Override
+    public int getScheduledTokens() {
+        return this.scheduledTokens;
+    }
+
+    @Override
+    public void setScheduledTokens(int nrOfTokens) {
+        this.scheduledTokens = nrOfTokens;
     }
 
     @Override
