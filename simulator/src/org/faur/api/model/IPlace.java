@@ -28,7 +28,7 @@ public interface IPlace {
     /**
      * Sets the place name.
      */
-    void setName();
+    void setName(String name);
 
     /**
      * Gets the number of discrete marks that a place may contain.
