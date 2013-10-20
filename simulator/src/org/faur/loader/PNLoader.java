@@ -118,7 +118,7 @@ public class PNLoader implements ILoader {
             // search for the transition
             ITransition transition = getTransition(inputLocs[0]);
             if (transition != null) {
-                List<IPlace> iPlaces = new ArrayList<IPlace>(inputLocs.length);
+                List<IPlace> iPlaces = new ArrayList<IPlace>();
                 for (int i = 1; i < inputLocs.length; i++) {
                     iPlaces.add(this.places.get(inputLocs[i]));
                 }
@@ -136,7 +136,7 @@ public class PNLoader implements ILoader {
             // search for the transition
             ITransition transition = getTransition(outputLocs[0]);
             if (transition != null) {
-                List<IPlace> iPlaces = new ArrayList<IPlace>(outputLocs.length);
+                List<IPlace> iPlaces = new ArrayList<IPlace>();
                 for (int i = 1; i < outputLocs.length; i++) {
                     iPlaces.add(this.places.get(outputLocs[i]));
                 }
